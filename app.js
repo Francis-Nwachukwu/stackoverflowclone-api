@@ -4,9 +4,13 @@ import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import helmet from "helmet";
+import swaggerUI from "swagger-ui-express";
+import YAML from "yamljs";
 
 import userRouter from "./routes/users.js";
 import questionRouter from "./routes/questions.js";
+
+const swaggerDocument = YAML.load("./swagger.yaml");
 
 const app = express();
 dotenv.config();
@@ -17,8 +21,11 @@ app.use(cors());
 app.use(helmet());
 
 app.get("/", (req, res) => {
-  res.send("Stackoverflowclone-api");
+  res.send(
+    '<h1>Stackoverflowclone-api</h1><a href="/api-docs">API Documentation</a>'
+  );
 });
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
 app.use("/auth", userRouter);
 app.use("/questions", questionRouter);

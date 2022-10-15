@@ -1,0 +1,208 @@
+openapi: 3.0.0
+info:
+  title: stackoverflowclone-api
+  contact: {}
+  version: "1.0"
+servers:
+  - url: https://stackoverflowclone-api.herokuapp.com
+    variables: {}
+paths:
+  /auth/signin:
+    post:
+      tags:
+        - Auth
+      summary: Login User
+      operationId: LoginUser
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/LoginUserRequest"
+                - example:
+                    email: smithdoe@email.com
+                    password: smithdoe123
+            example:
+              email: smithdoe@email.com
+              password: smithdoe123
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security: []
+  /auth/signup:
+    post:
+      tags:
+        - Auth
+      summary: Register User
+      operationId: RegisterUser
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/RegisterUserRequest"
+                - example:
+                    firstName: Smith
+                    lastName: Doe
+                    email: smithdoe@email.com
+                    password: smithdoe123
+                    confirmPassword: smithdoe123
+            example:
+              firstName: Smith
+              lastName: Doe
+              email: smithdoe@email.com
+              password: smithdoe123
+              confirmPassword: smithdoe123
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security: []
+  /questions:
+    get:
+      tags:
+        - Questions
+      summary: Get All Questions
+      operationId: GetAllQuestions
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security: []
+  /questions/{title}:
+    parameters:
+      - in: path
+        name: title
+        schema:
+          type: string
+        required: true
+        description: The question title
+    get:
+      tags:
+        - Questions
+      summary: Get Question By Title
+      operationId: GetQuestionByTitle
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security: []
+  /questions/ask:
+    post:
+      tags:
+        - Questions
+      summary: Post Question
+      operationId: PostQuestion
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/PostQuestionRequest"
+                - example:
+                    title: "Error: Can't set headers after they are sent to the client"
+                    body: I'm fairly new to Node.js and I am having some issues.I am using Node.js 4.10 and Express 2.4.3. When I try to access http://127.0.0.1:8888/auth/facebook, i'll be redirected to http://127.0.0.1:8888/auth/facebook_callback. I then receive the following error
+                    tags: node.js, headers, express, backend, callback
+                    selectedImage: https://images.pexels.com/photos/4974915/pexels-photo-4974915.jpeg?auto=compress&cs=tinysrgb&w=600
+            example:
+              title: "Error: Can't set headers after they are sent to the client"
+              body: I'm fairly new to Node.js and I am having some issues.I am using Node.js 4.10 and Express 2.4.3. When I try to access http://127.0.0.1:8888/auth/facebook, i'll be redirected to http://127.0.0.1:8888/auth/facebook_callback. I then receive the following error
+              tags: node.js, headers, express, backend, callback
+              selectedImage: https://images.pexels.com/photos/4974915/pexels-photo-4974915.jpeg?auto=compress&cs=tinysrgb&w=600
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+components:
+  schemas:
+    LoginUserRequest:
+      title: LoginUserRequest
+      required:
+        - email
+        - password
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        email: smithdoe@email.com
+        password: smithdoe123
+    RegisterUserRequest:
+      title: RegisterUserRequest
+      required:
+        - firstName
+        - lastName
+        - email
+        - password
+        - confirmPassword
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        confirmPassword:
+          type: string
+      example:
+        firstName: Smith
+        lastName: Doe
+        email: smithdoe@email.com
+        password: smithdoe123
+        confirmPassword: smithdoe123
+    PostQuestionRequest:
+      title: PostQuestionRequest
+      required:
+        - title
+        - body
+        - tags
+        - selectedImage
+      type: object
+      properties:
+        title:
+          type: string
+        body:
+          type: string
+        tags:
+          type: string
+        selectedImage:
+          type: string
+      example:
+        title: "Error: Can't set headers after they are sent to the client"
+        body: I'm fairly new to Node.js and I am having some issues.I am using Node.js 4.10 and Express 2.4.3. When I try to access http://127.0.0.1:8888/auth/facebook, i'll be redirected to http://127.0.0.1:8888/auth/facebook_callback. I then receive the following error
+        tags: node.js, headers, express, backend, callback
+        selectedImage: https://images.pexels.com/photos/4974915/pexels-photo-4974915.jpeg?auto=compress&cs=tinysrgb&w=600
+  securitySchemes:
+    bearer:
+      type: http
+      scheme: bearer
+security: []
+tags:
+  - name: Auth
+    description: ""
+  - name: Questions
+    description: ""

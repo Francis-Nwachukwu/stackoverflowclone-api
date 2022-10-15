@@ -16,9 +16,9 @@ router.post(
   "/ask",
   [
     body("title")
-      .isLength({ min: 10, max: 70 })
+      .isLength({ min: 10, max: 100 })
       .withMessage(
-        "Invalid title. Must be at least 10 and at most 70 characters."
+        "Invalid title. Must be at least 10 and at most 100 characters."
       )
       .trim(),
     body("body").trim(),
